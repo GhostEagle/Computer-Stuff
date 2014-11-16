@@ -97,22 +97,24 @@ applyFilter(struct Filter *filter, cs1300bmp *input, cs1300bmp *output)
   output -> width = input -> width;
   output -> height = input -> height;
   int filterSize = filter -> getSize();
-  //int filterDivisor = filter -> getDivisor();
+  int filterDivisor = filter -> getDivisor();
+  int value;
 
-  for(int col = 1; col < (input -> width) - 1; col = col + 1) {
-    for(int row = 1; row < (input -> height) - 1 ; row = row + 1) {
+
+  for(int row = 1; row < (input -> height) - 1; row = row + 1) {
+    for(int col = 1; col < (input -> width) - 1 ; col = col + 1) {
       for(int plane = 0; plane < 3; plane++) {
 
-	int value = 0;
+	value = 0;
 	for (int i = 0; i < filterSize; i++) {
 	  for (int j = 0; j < filterSize; j++) {
 	    value = value +  input -> color[plane][row + i - 1][col + j - 1]
 	      * filter -> get(i, j);
 	  }
 	}
-	value = value / filter -> getDivisor();
+	value = value / filterDivisor;
 	if ( value  < 0 ) { value = 0; }
-	if ( value  > 255 ) { value = 255; }
+	else if ( value  > 255 ) { value = 255; }
 	output -> color[plane][row][col] = value;
       }
     }
