@@ -100,70 +100,41 @@ applyFilter(struct Filter *filter, cs1300bmp *input, cs1300bmp *output)
   int filterDivisor = 1;
   int value;
 
+  for(int plane = 0; plane < 3; plane++){
+    for(int row = 1; row < (input -> height) - 1; row = row + 1) {
+      for(int col = 1; col < (input -> width) - 1 ; col = col + 1) {
+        //for(int plane = 0; plane < 3; plane++) {
 
-  for(int row = 1; row < (input -> height) - 1; row = row + 1) {
-    for(int col = 1; col < (input -> width) - 1 ; col = col + 1) {
-      //for(int plane = 0; plane < 3; plane++) {
+	 /*value = 0;
+	 for (int i = 0; i < filterSize; i++) {
+	   for (int j = 0; j < filterSize; j++) {
+	     value = value +  input -> color[plane][row + i - 1][col + j - 1]
+	       * filter -> get(i, j);
+	   }
+	 }
+	 value = value / filterDivisor;
+	 if ( value  < 0 ) { value = 0; }
+	 else if ( value  > 255 ) { value = 255; }
+	 output -> color[plane][row][col] = value;*/
 
-	/*value = 0;
-	for (int i = 0; i < filterSize; i++) {
-	  for (int j = 0; j < filterSize; j++) {
-	    value = value +  input -> color[plane][row + i - 1][col + j - 1]
-	      * filter -> get(i, j);
-	  }
-	}
-	value = value / filterDivisor;
-	if ( value  < 0 ) { value = 0; }
-	else if ( value  > 255 ) { value = 255; }
-	output -> color[plane][row][col] = value;*/
+    value = 0;
+    value += input -> color[plane][row - 1][col - 1] * filter -> get(0,0);
+    value += input -> color[plane][row - 1][col] * filter -> get(0,1);
+    value += input -> color[plane][row - 1][col + 1] * filter -> get(0,2);
+    value += input -> color[plane][row][col - 1] * filter -> get(1,0);
+    value += input -> color[plane][row][col] * filter -> get(1,1);
+    value += input -> color[plane][row][col + 1] * filter -> get(1,2);
+    value += input -> color[plane][row + 1][col - 1] * filter -> get(2,0);
+    value += input -> color[plane][row + 1][col] * filter -> get(2,1);
+    value += input -> color[plane][row + 1][col + 1] * filter -> get(2,2);
+    value = value / filterDivisor;
+    if ( value  < 0 ) { value = 0; }
+    else if ( value  > 255 ) { value = 255; }
+    output -> color[plane][row][col] = value;
 
-  value = 0;
-  value += input -> color[0][row - 1][col - 1] * filter -> get(0,0);
-  value += input -> color[0][row - 1][col] * filter -> get(0,1);
-  value += input -> color[0][row - 1][col + 1] * filter -> get(0,2);
-  value += input -> color[0][row][col - 1] * filter -> get(1,0);
-  value += input -> color[0][row][col] * filter -> get(1,1);
-  value += input -> color[0][row][col + 1] * filter -> get(1,2);
-  value += input -> color[0][row + 1][col - 1] * filter -> get(2,0);
-  value += input -> color[0][row + 1][col] * filter -> get(2,1);
-  value += input -> color[0][row + 1][col + 1] * filter -> get(2,2);
-  value = value / filterDivisor;
-  if ( value  < 0 ) { value = 0; }
-  else if ( value  > 255 ) { value = 255; }
-  output -> color[0][row][col] = value;
-
-  value = 0;
-  value += input -> color[1][row - 1][col - 1] * filter -> get(0,0);
-  value += input -> color[1][row - 1][col] * filter -> get(0,1);
-  value += input -> color[1][row - 1][col + 1] * filter -> get(0,2);
-  value += input -> color[1][row][col - 1] * filter -> get(1,0);
-  value += input -> color[1][row][col] * filter -> get(1,1);
-  value += input -> color[1][row][col + 1] * filter -> get(1,2);
-  value += input -> color[1][row + 1][col - 1] * filter -> get(2,0);
-  value += input -> color[1][row + 1][col] * filter -> get(2,1);
-  value += input -> color[1][row + 1][col + 1] * filter -> get(2,2);
-  value = value / filterDivisor;
-  if ( value  < 0 ) { value = 0; }
-  else if ( value  > 255 ) { value = 255; }
-  output -> color[1][row][col] = value;
-
-  value = 0;
-  value += input -> color[2][row - 1][col - 1] * filter -> get(0,0);
-  value += input -> color[2][row - 1][col] * filter -> get(0,1);
-  value += input -> color[2][row - 1][col + 1] * filter -> get(0,2);
-  value += input -> color[2][row][col - 1] * filter -> get(1,0);
-  value += input -> color[2][row][col] * filter -> get(1,1);
-  value += input -> color[2][row][col + 1] * filter -> get(1,2);
-  value += input -> color[2][row + 1][col - 1] * filter -> get(2,0);
-  value += input -> color[2][row + 1][col] * filter -> get(2,1);
-  value += input -> color[2][row + 1][col + 1] * filter -> get(2,2);
-  value = value / filterDivisor;
-  if ( value  < 0 ) { value = 0; }
-  else if ( value  > 255 ) { value = 255; }
-  output -> color[2][row][col] = value;
+        }
       }
     }
- // }
 
   cycStop = rdtscll();
   double diff = cycStop - cycStart;
