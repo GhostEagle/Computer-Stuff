@@ -162,7 +162,7 @@ applyFilter(struct Filter *filter, cs1300bmp *input, cs1300bmp *output)
   else if ( value  > 255 ) { value = 255; }
   output -> color[2][row][col] = value;
       }
-   // }
+    }
  // }
 
   cycStop = rdtscll();
