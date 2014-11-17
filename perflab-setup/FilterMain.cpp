@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include "Filter.h"
+#include "omp.h"
 
 using namespace std;
 
@@ -100,6 +101,7 @@ applyFilter(struct Filter *filter, cs1300bmp *input, cs1300bmp *output)
   int filterDivisor = filter -> getDivisor();
   int value;
 
+  #pragma omp parallel for private(value)
   for(int plane = 0; plane < 3; plane++){
     for(int row = 1; row < (input -> height) - 1; row = row + 1) {
       for(int col = 1; col < (input -> width) - 1 ; col = col + 1) {
@@ -132,9 +134,10 @@ applyFilter(struct Filter *filter, cs1300bmp *input, cs1300bmp *output)
     else if ( value  > 255 ) { value = 255; }
     output -> color[plane][row][col] = value;
 
-        }
+    
       }
     }
+  }
 
   cycStop = rdtscll();
   double diff = cycStop - cycStart;

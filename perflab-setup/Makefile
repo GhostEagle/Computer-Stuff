@@ -8,7 +8,7 @@ goals: judge
 	echo "Done"
 
 filter: FilterMain.cpp Filter.cpp cs1300bmp.cc
-	$(CXX) $(CXXFLAGS) -o filter FilterMain.cpp Filter.cpp cs1300bmp.cc
+	$(CXX) $(CXXFLAGS) -o filter FilterMain.cpp Filter.cpp cs1300bmp.cc -fopenmp -std=c++11
 ##
 ## Parameters for the test run
 ##
