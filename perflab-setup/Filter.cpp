@@ -27,7 +27,7 @@ void Filter::setDivisor(int value)
   divisor = value;
 }
 
-int Filter::getSize()
-{
-  return dim;
-}
+//int Filter::getSize()
+//{
+//  return dim;
+//}

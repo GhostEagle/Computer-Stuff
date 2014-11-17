@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 #
 ##
-## PerfLab judging script from 2013
+## PerfLab judging script from 2011
 ##
 ## Usage:
 ##
@@ -63,7 +63,7 @@ for my $filter ( @FILTERS ){
     close(OUTPUT);
 }
 @scores = sort { int($a) <=> int($b) } @scores;
-#print "CPEs are @scores \n";
+print "Scores are @scores \n";
 $median = int( ($#scores + 1) / 2 );
 $cpe = $scores[$median];
 print "median CPE is ", $cpe, "\n";

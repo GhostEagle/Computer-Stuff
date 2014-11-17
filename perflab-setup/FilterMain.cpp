@@ -97,7 +97,7 @@ applyFilter(struct Filter *filter, cs1300bmp *input, cs1300bmp *output)
   output -> width = input -> width;
   output -> height = input -> height;
   int filterSize = 3;
-  int filterDivisor = 1;
+  int filterDivisor = filter -> getDivisor();
   int value;
 
   for(int plane = 0; plane < 3; plane++){
